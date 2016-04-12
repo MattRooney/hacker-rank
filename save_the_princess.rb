@@ -1,6 +1,40 @@
 def display_path_to_princess(n, grid)
-  if princess_location == "top left"
+  moves = []
+
+  case princess_location(n, grid)
+    when "top left"
+      ((n - 1)/2).times do
+        moves << "UP"
+      end
+      ((n - 1)/2).times do
+        moves << "LEFT"
+      end
+    when "top right"
+      ((n - 1)/2).times do
+        moves << "UP"
+      end
+      ((n - 1)/2).times do
+        moves << "RIGHT"
+      end
+    when "bottom left"
+      ((n - 1)/2).times do
+        moves << "DOWN"
+      end
+      ((n - 1)/2).times do
+        moves << "LEFT"
+      end
+    when "bottom right"
+      ((n - 1)/2).times do
+        moves << "DOWN"
+      end
+      ((n - 1)/2).times do
+        moves << "RIGHT"
+      end
+    else
+      puts "The Princess is not in one of the four corners!"
   end
+
+  puts moves.join("\n") + "\n"
 end
 
 def princess_location(n, grid)
