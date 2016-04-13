@@ -1,8 +1,18 @@
 #!/bin/ruby
 def nextMove(n,r,c,grid)
-  player_location = grid[r][c]
-
-  puts "0 0"
+  player_coordinates = [r, c]
+  princess_coordinates = princess_location(grid)
+  if player_coordinates[0] > princess_coordinates[0]
+    puts "UP"
+  elsif player_coordinates[0] < princess_coordinates[0]
+    puts "DOWN"
+  elsif player_coordinates[1] > princess_coordinates[1]
+    puts "LEFT"
+  elsif player_coordinates[1] < princess_coordinates[1]
+    puts "RIGHT"
+  else
+    "You saved the Princess!"
+  end
 end
 
 def princess_location(grid)
