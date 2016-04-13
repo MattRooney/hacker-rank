@@ -1,40 +1,26 @@
 def display_path_to_princess(n, grid)
-  moves = []
+  puts path_to_princess(n, grid).join("\n") + "\n"
+end
 
+def path_to_princess(n, grid)
+  moves = []
   case princess_location(n, grid)
     when "top left"
-      ((n - 1)/2).times do
-        moves << "UP"
-      end
-      ((n - 1)/2).times do
-        moves << "LEFT"
-      end
+      move("UP", n, moves)
+      move("LEFT", n, moves)
     when "top right"
-      ((n - 1)/2).times do
-        moves << "UP"
-      end
-      ((n - 1)/2).times do
-        moves << "RIGHT"
-      end
+      move("UP", n, moves)
+      move("RIGHT", n, moves)
     when "bottom left"
-      ((n - 1)/2).times do
-        moves << "DOWN"
-      end
-      ((n - 1)/2).times do
-        moves << "LEFT"
-      end
+      move("DOWN", n, moves)
+      move("LEFT", n, moves)
     when "bottom right"
-      ((n - 1)/2).times do
-        moves << "DOWN"
-      end
-      ((n - 1)/2).times do
-        moves << "RIGHT"
-      end
+      move("DOWN", n, moves)
+      move("RIGHT", n, moves)
     else
       puts "The Princess is not in one of the four corners!"
   end
-
-  puts moves.join("\n") + "\n"
+  moves
 end
 
 def princess_location(n, grid)
@@ -44,13 +30,16 @@ def princess_location(n, grid)
     "top right"
   elsif grid.last[0] == "p"
     "bottom left"
-  elsif grid.last[n-1] == "p"
-    "bottom right"
   else
-    "Error"
+    "bottom right"
   end
 end
 
+def move(direction, n, moves)
+  ((n - 1)/2).times do
+    moves << direction
+  end
+end
 
 #read input
 m = gets.to_i
@@ -61,4 +50,4 @@ grid = Array.new(m)
     grid[i] = gets.strip
 end
 
-displayPathtoPrincess(m,grid)
+display_path_to_princess(m,grid)
