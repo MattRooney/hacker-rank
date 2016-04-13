@@ -1,5 +1,5 @@
 def display_path_to_princess(n, grid)
-  puts path_to_princess(n, grid).join("\n") + "\n"
+  puts path_to_princess(n, grid).join("\n")
 end
 
 def path_to_princess(n, grid)
