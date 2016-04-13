@@ -1,13 +1,19 @@
 #!/bin/ruby
 def nextMove(n,r,c,grid)
-  puts "0 0" 
+  player_location = grid[r][c]
+
+  puts "0 0"
 end
 
-def princess_location
-end
-
-def mario_location
-
+def princess_location(grid)
+  princess_coordinates = []
+  grid.each do |row|
+    if row.chars.include?("p")
+      princess_coordinates << grid.index(row)
+      princess_coordinates << row.chars.index("p")
+    end
+  end
+  princess_coordinates
 end
 
 n = gets.to_i
