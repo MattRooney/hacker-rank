@@ -42,8 +42,15 @@ board_size = gets.to_i
 
 grid = Array.new(board_size)
 
-(0...board_size).each do |i|
-  grid[i] = gets.strip
+(0...board_size).each do |row|
+  grid[row] = '-' * board_size
 end
 
+grid[(board_size / 2)][(board_size / 2)] = 'm'
+
+four_corners = [0, 0], [0, -1], [-1, 0], [-1, -1]
+princess_row, princess_column = four_corners[rand(0..3)]
+grid[princess_row][princess_column] = 'p'
+
+puts grid
 display_path_to_princess(board_size, grid)
