@@ -1,7 +1,8 @@
 #!/bin/ruby
-def next_move(n,r,c,grid)
-  player_coordinates = [r, c]
+def next_move(n, r, c, grid)
+  player_coordinates   = [r, c]
   princess_coordinates = find_princess_location(grid)
+
   if player_coordinates[0] > princess_coordinates[0]
     puts "UP"
   elsif player_coordinates[0] < princess_coordinates[0]
@@ -29,12 +30,12 @@ end
 # read input
 n = gets.to_i
 
-r,c = gets.strip.split.map {|num| num.to_i}
+r, c = gets.strip.split.map { |num| num.to_i }
 
 grid = Array.new(n)
 
 (0...n).each do |i|
-    grid[i] = gets
+  grid[i] = gets
 end
 
-next_move(n,r,c,grid)
+next_move(n, r, c, grid)
