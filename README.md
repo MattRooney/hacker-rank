@@ -1,4 +1,4 @@
-### HackerRank Save The Princess Challenges
+### HackerRank: Save The Princess Challenges
 
 This repo contains my solutions to the Bot Saves Princess 1 &amp; 2 on HackerRank.com, using ruby 2.2.2p95.  
 
