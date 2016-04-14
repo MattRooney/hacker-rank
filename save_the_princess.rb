@@ -24,14 +24,10 @@ def path_to_princess(n, grid)
 end
 
 def princess_location(grid)
-  if grid.first[0] == "p"
-    "top left"
-  elsif grid.first[-1] == "p"
-    "top right"
-  elsif grid.last[0] == "p"
-    "bottom left"
-  else
-    "bottom right"
+  four_corners = [ grid[0][0], grid[0][-1], grid[-1][0], grid[-1][-1] ]
+  four_results = [ "top left", "top right", "bottom left", "bottom right"]
+  four_corners.each_with_index do |corner, index|
+    return four_results[index] if corner == "p"
   end
 end
 
