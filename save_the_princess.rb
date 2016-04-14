@@ -37,7 +37,6 @@ def move(direction, n, moves)
   end
 end
 
-# read input
 m = gets.to_i
 
 grid = Array.new(m)

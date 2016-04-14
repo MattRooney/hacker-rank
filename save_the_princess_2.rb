@@ -2,14 +2,27 @@
 def next_move(n, r, c, grid)
   player_coordinates   = [r, c]
   princess_coordinates = find_princess_location(grid)
+  if vertical_check(player_coordinates[0], princess_coordinates[0]).nil?
+    puts horizontal_check(player_coordinates[1], princess_coordinates[1])
+  else
+    puts vertical_check(player_coordinates[0], princess_coordinates[0])
+  end
+end
 
-  if player_coordinates[0] > princess_coordinates[0]
-    puts "UP"
-  elsif player_coordinates[0] < princess_coordinates[0]
-    puts "DOWN"
-  elsif player_coordinates[1] > princess_coordinates[1]
+def vertical_check(player_y, princess_y)
+  if player_y > princess_y
+    "UP"
+  elsif player_y < princess_y
+    "DOWN"
+  else
+    nil
+  end
+end
+
+def horizontal_check(player_x, princess_x)
+  if player_x > princess_x
     puts "LEFT"
-  elsif player_coordinates[1] < princess_coordinates[1]
+  elsif player_x < princess_x
     puts "RIGHT"
   else
     puts "You saved the Princess!"
@@ -17,14 +30,12 @@ def next_move(n, r, c, grid)
 end
 
 def find_princess_location(grid)
-  princess_coordinates = []
-  grid.each do |row|
+  princess_coordinates = grid.map do |row|
     if row.chars.include?("p")
-      princess_coordinates << grid.index(row)
-      princess_coordinates << row.chars.index("p")
+      [grid.index(row), row.chars.index("p")]
     end
   end
-  princess_coordinates
+  princess_coordinates.compact.flatten
 end
 
 # read input
