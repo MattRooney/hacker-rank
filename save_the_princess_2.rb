@@ -1,12 +1,3 @@
-class Player
-  attr_reader :y, :x
-
-  def initialize(y, x)
-    @y = y
-    @x = x
-  end
-end
-
 class Game
   attr_reader :board
   attr_accessor :mario, :princess
@@ -14,19 +5,19 @@ class Game
   def initialize(mario_starting_row, mario_starting_column, grid)
     @board = grid
     @mario = Player.new(mario_starting_row, mario_starting_column)
-    @princess = find_princess_location(@board)
+    @princess = find_princess_location_and_instantiate
   end
 
-  def find_princess_location(board)
-    coordinates_array = scan_board_for(board, 'p')
-    princess_coordinates = coordinates_array.compact.flatten
-    Player.new(princess_coordinates[0], princess_coordinates[1])
+  def find_princess_location_and_instantiate
+    coordinates_array = scan_board_for(@board, 'p')
+    princess_y, princess_x = coordinates_array.compact.flatten
+    Player.new(princess_y, princess_x)
   end
 
-  def scan_board_for(board, x)
+  def scan_board_for(board, character)
     board.map do |row|
-      if row.chars.include?(x)
-        [board.index(row), row.chars.index(x)]
+      if row.chars.include?(character)
+        [board.index(row), row.chars.index(character)]
       end
     end
   end
@@ -56,7 +47,15 @@ class Game
   end
 end
 
-# take input
+class Player
+  attr_reader :y, :x
+
+  def initialize(y, x)
+    @y = y
+    @x = x
+  end
+end
+
 puts "Please enter a board size between 3 and 100:"
 
 board_size = gets.to_i

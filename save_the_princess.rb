@@ -1,43 +1,69 @@
-def display_path_to_princess(n, grid)
-  puts path_to_princess(n, grid).join("\n")
-end
+class Game
+  attr_reader :board
+  attr_accessor :mario, :princess
 
-def path_to_princess(n, grid)
-  moves = []
-  case princess_location(grid)
-  when "top left"
-    move("UP", n, moves)
-    move("LEFT", n, moves)
-  when "top right"
-    move("UP", n, moves)
-    move("RIGHT", n, moves)
-  when "bottom left"
-    move("DOWN", n, moves)
-    move("LEFT", n, moves)
-  when "bottom right"
-    move("DOWN", n, moves)
-    move("RIGHT", n, moves)
-  else
-    puts "The Princess is not in one of the four corners!"
+  def initialize(board_size, grid)
+    @board_size = board_size
+    @grid = grid
+    @mario = Player.new((board_size / 2), (board_size / 2))
+    @princess = Player.new(find_princess_coordinates[0], find_princess_coordinates[1])
   end
-  moves
-end
 
-def princess_location(grid)
-  four_corners = [grid[0][0], grid[0][-1], grid[-1][0], grid[-1][-1]]
-  four_results = ["top left", "top right", "bottom left", "bottom right"]
-  four_corners.each_with_index do |corner, index|
-    return four_results[index] if corner == "p"
+  def display_path_to_princess
+    puts path_to_princess
+  end
+
+  def path_to_princess
+    moves = []
+    until @mario.y == @princess.y && @mario.x == @princess.x
+      if @mario.y > @princess.y
+        @mario.y -= 1
+        moves << "UP"
+      elsif @mario.y < @princess.y
+        @mario.y += 1
+        moves << "DOWN"
+      elsif @mario.x > @princess.x
+        @mario.x -= 1
+        moves << "LEFT"
+      elsif @mario.x < @princess.x
+        @mario.x += 1
+        moves << "RIGHT"
+      end
+    end
+    moves
+  end
+
+  def find_princess_coordinates
+    max_coord = @board_size - 1
+    four_corners = [0, 0], [0, max_coord], [max_coord, 0], [max_coord, max_coord]
+    coordinates_array = scan_four_corners(four_corners, 'p')
+    coordinates_array.compact.flatten
+  end
+
+  def scan_four_corners(four_corners, character)
+    four_corners.map do |corner|
+      corner if @grid[corner[0]][corner[1]] == character
+    end
+  end
+
+  def move(direction, board_size, moves)
+    (board_size / 2).times do
+      moves << direction
+    end
   end
 end
 
-def move(direction, n, moves)
-  ((n - 1) / 2).times do
-    moves << direction
+class Player
+  attr_accessor :y, :x
+
+  def initialize(y, x)
+    @y = y
+    @x = x
   end
 end
 
 puts "Please enter a board size between 3 and 100:"
+
 board_size = gets.to_i
 
 grid = Array.new(board_size)
@@ -52,5 +78,6 @@ four_corners = [0, 0], [0, -1], [-1, 0], [-1, -1]
 princess_row, princess_column = four_corners[rand(0..3)]
 grid[princess_row][princess_column] = 'p'
 
+game = Game.new(board_size, grid)
 puts grid
-display_path_to_princess(board_size, grid)
+game.display_path_to_princess
