@@ -4,29 +4,29 @@ end
 
 def path_to_princess(n, grid)
   moves = []
-  case princess_location(n, grid)
-    when "top left"
-      move("UP", n, moves)
-      move("LEFT", n, moves)
-    when "top right"
-      move("UP", n, moves)
-      move("RIGHT", n, moves)
-    when "bottom left"
-      move("DOWN", n, moves)
-      move("LEFT", n, moves)
-    when "bottom right"
-      move("DOWN", n, moves)
-      move("RIGHT", n, moves)
-    else
-      puts "The Princess is not in one of the four corners!"
+  case princess_location(grid)
+  when "top left"
+    move("UP", n, moves)
+    move("LEFT", n, moves)
+  when "top right"
+    move("UP", n, moves)
+    move("RIGHT", n, moves)
+  when "bottom left"
+    move("DOWN", n, moves)
+    move("LEFT", n, moves)
+  when "bottom right"
+    move("DOWN", n, moves)
+    move("RIGHT", n, moves)
+  else
+    puts "The Princess is not in one of the four corners!"
   end
   moves
 end
 
-def princess_location(n, grid)
+def princess_location(grid)
   if grid.first[0] == "p"
     "top left"
-  elsif grid.first[n-1] == "p"
+  elsif grid.first[-1] == "p"
     "top right"
   elsif grid.last[0] == "p"
     "bottom left"

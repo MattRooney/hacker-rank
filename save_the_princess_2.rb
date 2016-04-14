@@ -1,5 +1,5 @@
 #!/bin/ruby
-def nextMove(n,r,c,grid)
+def next_move(n,r,c,grid)
   player_coordinates = [r, c]
   princess_coordinates = princess_location(grid)
   if player_coordinates[0] > princess_coordinates[0]
@@ -36,4 +36,4 @@ grid = Array.new(n)
     grid[i] = gets
 end
 
-nextMove(n,r,c,grid)
+next_move(n,r,c,grid)
