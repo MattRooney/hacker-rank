@@ -33,44 +33,38 @@ class Game
 
   def next_move
     @princess ||= find_princess_location(@board)
-    if vertical_check(@mario.y, @princess.y).nil?
-      puts horizontal_check(@mario.x, @princess.x)
+    if vertical_check.nil?
+      puts horizontal_check
     else
-      puts vertical_check(@mario.y, @princess.y)
+      puts vertical_check
     end
   end
 
-  def vertical_check(player_y, princess_y)
-    if player_y > princess_y
+  def vertical_check
+    if @mario.y > @princess.y
       "UP"
-    elsif player_y < princess_y
+    elsif @mario.y < @princess.y
       "DOWN"
-    else
-      nil
     end
   end
 
-  def horizontal_check(player_x, princess_x)
-    if player_x > princess_x
-      puts "LEFT"
-    elsif player_x < princess_x
-      puts "RIGHT"
-    else
-      puts "You saved the Princess!"
+  def horizontal_check
+    if @mario.x > @princess.x
+      "LEFT"
+    elsif @mario.x < @princess.x
+      "RIGHT"
     end
   end
 end
 
 # read input
 n = gets.to_i
-
 r, c = gets.strip.split.map { |num| num.to_i }
-
 grid = Array.new(n)
-
 (0...n).each do |i|
   grid[i] = gets
 end
 
+# run
 game = Game.new(n, r, c, grid)
 game.next_move
