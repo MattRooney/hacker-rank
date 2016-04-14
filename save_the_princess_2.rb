@@ -1,7 +1,7 @@
 #!/bin/ruby
 def next_move(n,r,c,grid)
   player_coordinates = [r, c]
-  princess_coordinates = princess_location(grid)
+  princess_coordinates = find_princess_location(grid)
   if player_coordinates[0] > princess_coordinates[0]
     puts "UP"
   elsif player_coordinates[0] < princess_coordinates[0]
@@ -11,11 +11,11 @@ def next_move(n,r,c,grid)
   elsif player_coordinates[1] < princess_coordinates[1]
     puts "RIGHT"
   else
-    "You saved the Princess!"
+    puts "You saved the Princess!"
   end
 end
 
-def princess_location(grid)
+def find_princess_location(grid)
   princess_coordinates = []
   grid.each do |row|
     if row.chars.include?("p")
@@ -26,6 +26,7 @@ def princess_location(grid)
   princess_coordinates
 end
 
+# read input
 n = gets.to_i
 
 r,c = gets.strip.split.map {|num| num.to_i}
