@@ -37,12 +37,13 @@ def move(direction, n, moves)
   end
 end
 
-m = gets.to_i
+puts "Please enter a board size between 3 and 100:"
+board_size = gets.to_i
 
-grid = Array.new(m)
+grid = Array.new(board_size)
 
-(0...m).each do |i|
+(0...board_size).each do |i|
   grid[i] = gets.strip
 end
 
-display_path_to_princess(m, grid)
+display_path_to_princess(board_size, grid)

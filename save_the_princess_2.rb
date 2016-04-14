@@ -1,20 +1,21 @@
+require 'pry'
 class Player
-  attr_reader :x, :y
+  attr_reader :y, :x
 
   def initialize(y, x)
-    @x = x
     @y = y
+    @x = x
   end
 end
 
 class Game
-  attr_reader :board, :board_size
+  attr_reader :board
   attr_accessor :mario, :princess
 
-  def initialize(n, r, c, grid)
+  def initialize(mario_starting_row, mario_starting_column, grid)
     @board = grid
-    @board_size = n
-    @mario = Player.new(r, c)
+    @mario = Player.new(mario_starting_row, mario_starting_column)
+    @princess = find_princess_location(@board)
   end
 
   def find_princess_location(board)
@@ -32,7 +33,6 @@ class Game
   end
 
   def next_move
-    @princess ||= find_princess_location(@board)
     if vertical_check.nil?
       puts horizontal_check
     else
@@ -57,14 +57,26 @@ class Game
   end
 end
 
-# read input
-n = gets.to_i
-r, c = gets.strip.split.map { |num| num.to_i }
-grid = Array.new(n)
-(0...n).each do |i|
-  grid[i] = gets
+# take input
+puts "Please enter a board size between 3 and 100:"
+
+board_size = gets.to_i
+
+puts "Now enter Mario's starting row number and column number, respectively,
+separated by a space. Note - the top left corner being equal to 0, 0 and the
+bottom right being equal to #{board_size - 1}, #{board_size - 1}."
+
+mario_starting_row, mario_starting_column = gets.strip.split.map { |num| num.to_i }
+
+grid = Array.new(board_size)
+
+(0...board_size).each do |row|
+  grid[row] = '-' * board_size
 end
 
+grid[mario_starting_row][mario_starting_column] = 'm'
+grid[rand(0..board_size)][rand(0..board_size)] = 'p'
 # run
-game = Game.new(n, r, c, grid)
+game = Game.new(mario_starting_row, mario_starting_column, grid)
+puts grid
 game.next_move
