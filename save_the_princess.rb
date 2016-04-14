@@ -45,12 +45,6 @@ class Game
       corner if @grid[corner[0]][corner[1]] == character
     end
   end
-
-  def move(direction, board_size, moves)
-    (board_size / 2).times do
-      moves << direction
-    end
-  end
 end
 
 class Player

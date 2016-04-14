@@ -1,3 +1,4 @@
+require 'pry'
 class Game
   attr_reader :board
   attr_accessor :mario, :princess
@@ -24,31 +25,39 @@ class Game
 
   def next_move
     if vertical_check.nil?
-      puts horizontal_check
+      horizontal_check
     else
-      puts vertical_check
+      vertical_check
     end
   end
 
   def vertical_check
     if @mario.y > @princess.y
-      "UP"
+      @mario.y -= 1
+      puts "UP"
     elsif @mario.y < @princess.y
-      "DOWN"
+      @mario.y += 1
+      puts "DOWN"
     end
   end
 
   def horizontal_check
     if @mario.x > @princess.x
-      "LEFT"
+      @mario.x -= 1
+      puts "LEFT"
     elsif @mario.x < @princess.x
-      "RIGHT"
+      @mario.x += 1
+      puts "RIGHT"
     end
+  end
+
+  def over
+    [@mario.y, @mario.x] == [@princess.y, @princess.x]
   end
 end
 
 class Player
-  attr_reader :y, :x
+  attr_accessor :y, :x
 
   def initialize(y, x)
     @y = y
@@ -76,5 +85,9 @@ grid[mario_starting_row][mario_starting_column] = 'm'
 grid[rand(0..board_size)][rand(0..board_size)] = 'p'
 # run
 game = Game.new(mario_starting_row, mario_starting_column, grid)
+
 puts grid
-game.next_move
+
+until game.over
+  game.next_move
+end
