@@ -1,4 +1,3 @@
-require 'pry'
 # Create game and handle game logic
 class Game
   attr_reader :board_size
@@ -80,11 +79,14 @@ class Board
   attr_reader :board, :board_size
   def initialize(board_size)
     @board = Array.new(board_size)
+    create_board(board_size)
+    populate_board(board_size)
+  end
 
+  def create_board(board_size)
     (0...board_size).each do |row|
       @board[row] = '-' * board_size
     end
-    populate_board(board_size)
   end
 
   def populate_board(board_size)
