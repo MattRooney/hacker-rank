@@ -1,11 +1,12 @@
+require 'pry'
 # Create game and handle game logic
 class Game
-  attr_reader :board
-  attr_accessor :mario, :princess
+  attr_reader :board_size
+  attr_accessor :board, :mario, :princess
 
-  def initialize(board_size, grid)
+  def initialize(board_size)
+    @board = Board.new(board_size)
     @board_size = board_size
-    @grid = grid
     @mario = Player.new((board_size / 2), (board_size / 2))
     princess_y, princess_x = find_princess_coordinates
     @princess = Player.new(princess_y, princess_x)
@@ -51,7 +52,7 @@ class Game
 
   def scan_four_corners(four_corners, character)
     four_corners.map do |corner|
-      corner if @grid[corner[0]][corner[1]] == character
+      corner if @board.board[corner[0]][corner[1]] == character
     end
   end
 
@@ -74,22 +75,36 @@ class Player
   end
 end
 
-puts 'Please enter a board size between 3 and 100:'
+# Create and populate board
+class Board
+  attr_reader :board, :board_size
+  def initialize(board_size)
+    @board = Array.new(board_size)
 
-board_size = gets.to_i
+    (0...board_size).each do |row|
+      @board[row] = '-' * board_size
+    end
+    populate_board(board_size)
+  end
 
-grid = Array.new(board_size)
+  def populate_board(board_size)
+    add_mario(board_size)
+    add_princess(board_size)
+  end
 
-(0...board_size).each do |row|
-  grid[row] = '-' * board_size
+  def add_mario(board_size)
+    @board[(board_size / 2)][(board_size / 2)] = 'm'
+  end
+
+  def add_princess(board_size)
+    four_corners = [0, 0], [0, -1], [-1, 0], [-1, -1]
+    princess_row, princess_column = four_corners[rand(0..3)]
+    @board[princess_row][princess_column] = 'p'
+  end
 end
 
-grid[(board_size / 2)][(board_size / 2)] = 'm'
-
-four_corners = [0, 0], [0, -1], [-1, 0], [-1, -1]
-princess_row, princess_column = four_corners[rand(0..3)]
-grid[princess_row][princess_column] = 'p'
-
-game = Game.new(board_size, grid)
-puts grid
+puts 'Please enter a board size between 3 and 100:'
+board_size = gets.to_i
+game = Game.new(board_size)
+puts game.board.board
 game.display_path_to_princess
