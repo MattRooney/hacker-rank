@@ -1,3 +1,4 @@
+# Create game and handle game logic
 class Game
   attr_reader :board
   attr_accessor :mario, :princess
@@ -6,7 +7,8 @@ class Game
     @board_size = board_size
     @grid = grid
     @mario = Player.new((board_size / 2), (board_size / 2))
-    @princess = Player.new(find_princess_coordinates[0], find_princess_coordinates[1])
+    princess_y, princess_x = find_princess_coordinates
+    @princess = Player.new(princess_y, princess_x)
   end
 
   def display_path_to_princess
@@ -15,27 +17,34 @@ class Game
 
   def path_to_princess
     moves = []
-    until @mario.y == @princess.y && @mario.x == @princess.x
-      if @mario.y > @princess.y
-        @mario.y -= 1
-        moves << "UP"
-      elsif @mario.y < @princess.y
-        @mario.y += 1
-        moves << "DOWN"
-      elsif @mario.x > @princess.x
-        @mario.x -= 1
-        moves << "LEFT"
-      elsif @mario.x < @princess.x
-        @mario.x += 1
-        moves << "RIGHT"
-      end
+    move_up_or_down(moves) until same_row
+    move_left_or_right(moves) until same_column
+    puts moves
+  end
+
+  def move_up_or_down(moves)
+    if @mario.y > @princess.y
+      @mario.y -= 1
+      moves << 'UP'
+    elsif @mario.y < @princess.y
+      @mario.y += 1
+      moves << 'DOWN'
     end
-    moves
+  end
+
+  def move_left_or_right(moves)
+    if @mario.x > @princess.x
+      @mario.x -= 1
+      moves << 'LEFT'
+    elsif @mario.x < @princess.x
+      @mario.x += 1
+      moves << 'RIGHT'
+    end
   end
 
   def find_princess_coordinates
-    max_coord = @board_size - 1
-    four_corners = [0, 0], [0, max_coord], [max_coord, 0], [max_coord, max_coord]
+    max_xy = @board_size - 1
+    four_corners = [0, 0], [0, max_xy], [max_xy, 0], [max_xy, max_xy]
     coordinates_array = scan_four_corners(four_corners, 'p')
     coordinates_array.compact.flatten
   end
@@ -45,8 +54,17 @@ class Game
       corner if @grid[corner[0]][corner[1]] == character
     end
   end
+
+  def same_column
+    @mario.x == @princess.x
+  end
+
+  def same_row
+    @mario.y == @princess.y
+  end
 end
 
+# Create player objects
 class Player
   attr_accessor :y, :x
 
@@ -56,7 +74,7 @@ class Player
   end
 end
 
-puts "Please enter a board size between 3 and 100:"
+puts 'Please enter a board size between 3 and 100:'
 
 board_size = gets.to_i
 

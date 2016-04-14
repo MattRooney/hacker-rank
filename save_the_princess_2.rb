@@ -1,3 +1,4 @@
+# Create game and handle game logic
 class Game
   attr_reader :board
   attr_accessor :mario, :princess
@@ -5,20 +6,18 @@ class Game
   def initialize(mario_starting_row, mario_starting_column, grid)
     @board = grid
     @mario = Player.new(mario_starting_row, mario_starting_column)
-    @princess = find_princess_location_and_instantiate
+    princess_y, princess_x = find_princess_coordinates
+    @princess = Player.new(princess_y, princess_x)
   end
 
-  def find_princess_location_and_instantiate
+  def find_princess_coordinates
     coordinates_array = scan_board_for(@board, 'p')
-    princess_y, princess_x = coordinates_array.compact.flatten
-    Player.new(princess_y, princess_x)
+    coordinates_array.compact.flatten
   end
 
-  def scan_board_for(board, character)
+  def scan_board_for(board, letter)
     board.map do |row|
-      if row.chars.include?(character)
-        [board.index(row), row.chars.index(character)]
-      end
+      [board.index(row), row.chars.index(letter)] if row.chars.include?(letter)
     end
   end
 
@@ -33,20 +32,20 @@ class Game
   def vertical_check
     if @mario.y > @princess.y
       @mario.y -= 1
-      puts "UP"
+      puts 'UP'
     elsif @mario.y < @princess.y
       @mario.y += 1
-      puts "DOWN"
+      puts 'DOWN'
     end
   end
 
   def horizontal_check
     if @mario.x > @princess.x
       @mario.x -= 1
-      puts "LEFT"
+      puts 'LEFT'
     elsif @mario.x < @princess.x
       @mario.x += 1
-      puts "RIGHT"
+      puts 'RIGHT'
     end
   end
 
@@ -55,16 +54,17 @@ class Game
   end
 end
 
+# Create player objects
 class Player
   attr_accessor :y, :x
 
-  def initialize(y, x)
+  def initialize(y = 0, x = 0)
     @y = y
     @x = x
   end
 end
 
-puts "Please enter a board size between 3 and 100:"
+puts 'Please enter a board size between 3 and 100:'
 
 board_size = gets.to_i
 
@@ -72,7 +72,7 @@ puts "Now enter Mario's starting row number and column number, respectively,
 separated by a space. Note - the top left corner being equal to 0, 0 and the
 bottom right being equal to #{board_size - 1}, #{board_size - 1}."
 
-mario_starting_row, mario_starting_column = gets.strip.split.map { |num| num.to_i }
+mario_starting_row, mario_starting_column = gets.strip.split.map(&:to_i)
 
 grid = Array.new(board_size)
 
@@ -87,6 +87,4 @@ game = Game.new(mario_starting_row, mario_starting_column, grid)
 
 puts grid
 
-until game.over
-  game.next_move
-end
+game.next_move until game.over
