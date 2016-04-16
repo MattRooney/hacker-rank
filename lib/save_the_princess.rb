@@ -19,7 +19,7 @@ class Game
     moves = []
     move_up_or_down(moves) until same_row
     move_left_or_right(moves) until same_column
-    puts moves
+    moves
   end
 
   def move_up_or_down(moves)
@@ -104,9 +104,3 @@ class Board
     @board[princess_row][princess_column] = 'p'
   end
 end
-
-puts 'Please enter a board size between 3 and 100:'
-board_size = gets.to_i
-game = Game.new(board_size)
-puts game.board.board
-game.display_path_to_princess
