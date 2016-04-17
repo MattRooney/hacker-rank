@@ -1,4 +1,4 @@
-require './lib/save_the_princess_2'
+require_relative '../lib/game'
 require 'minitest/autorun'
 require 'minitest/pride'
 
@@ -9,5 +9,5 @@ class SaveThePrincess2Test < Minitest::Test
     assert game.board
   end
 
-  
+
 end

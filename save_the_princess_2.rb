@@ -1,4 +1,4 @@
-require './lib/save_the_princess_2'
+require './save_the_princess_2/lib/game'
 
 puts 'Please enter a board size between 3 and 100:'
 board_size = gets.to_i

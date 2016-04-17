@@ -1,4 +1,4 @@
-require './lib/save_the_princess'
+require_relative '../lib/game'
 require 'minitest/autorun'
 require 'minitest/pride'
 
