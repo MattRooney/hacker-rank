@@ -10,4 +10,4 @@ mario_starting_row, mario_starting_column = gets.strip.split.map(&:to_i)
 
 game = Game.new(mario_starting_row, mario_starting_column, board_size)
 puts game.board.grid
-game.next_move until game.over
+puts game.next_move until game.over

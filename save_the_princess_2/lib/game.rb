@@ -1,6 +1,6 @@
 require_relative 'board'
 require_relative 'player'
-
+require 'pry'
 # Create game and handle game logic
 class Game
   attr_reader :board
@@ -35,20 +35,20 @@ class Game
   def vertical_check
     if @mario.y > @princess.y
       @mario.y -= 1
-      puts 'UP'
+      'UP'
     elsif @mario.y < @princess.y
       @mario.y += 1
-      puts 'DOWN'
+      'DOWN'
     end
   end
 
   def horizontal_check
     if @mario.x > @princess.x
       @mario.x -= 1
-      puts 'LEFT'
+      'LEFT'
     elsif @mario.x < @princess.x
       @mario.x += 1
-      puts 'RIGHT'
+      'RIGHT'
     end
   end
 
