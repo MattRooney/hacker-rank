@@ -16,6 +16,10 @@ From there you can run the programs from the command line:
 
 `$ ruby save_the_princess.rb` &amp; `$ ruby save_the_princess_2.rb`
 
-Both programs will puts the grid with the original placement of both characters as well as Mario's entire path to the Princess, like so:
+To run the tests for both programs, simply run:
+
+`$ rake`
+
+Both programs will display the grid with the original placement of both characters as well as Mario's entire path to the Princess, like so:
 
 ![screen_shot](screen_shot.png)
