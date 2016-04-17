@@ -38,8 +38,21 @@ class SaveThePrincess2Test < Minitest::Test
     game.princess.y, game.princess.x = [0, 0]
 
     assert_equal [2, 2], [game.mario.y, game.mario.x]
+
     assert_equal 'UP', game.next_move
 
-    # assert_equal [1, 2], [game.mario.y, game.mario.x]
+    assert_equal [1, 2], [game.mario.y, game.mario.x]
+
+    assert_equal 'UP', game.next_move
+
+    assert_equal [0, 2], [game.mario.y, game.mario.x]
+
+    assert_equal 'LEFT', game.next_move
+
+    assert_equal [0, 1], [game.mario.y, game.mario.x]
+
+    assert_equal 'LEFT', game.next_move
+
+    assert_equal [0, 0], [game.mario.y, game.mario.x]
   end
 end

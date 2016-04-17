@@ -25,14 +25,14 @@ class Game
   end
 
   def next_move
-    if vertical_check.nil?
-      horizontal_check
+    if (@mario.y == @princess.y)
+      horizontal_move
     else
-      vertical_check
+      vertical_move
     end
   end
 
-  def vertical_check
+  def vertical_move
     if @mario.y > @princess.y
       @mario.y -= 1
       'UP'
@@ -42,7 +42,7 @@ class Game
     end
   end
 
-  def horizontal_check
+  def horizontal_move
     if @mario.x > @princess.x
       @mario.x -= 1
       'LEFT'
